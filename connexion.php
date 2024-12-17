@@ -4,20 +4,31 @@ require_once 'config.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
     $username = trim($_POST['username'] ?? "");
+
     $password = trim($_POST['password'] ?? "");
 
     $sql = "SELECT * FROM users WHERE username = :username";
+
     $stmt = $pdo->prepare($sql);
+
     $stmt->execute([':username' => $username]);
+
     $user = $stmt->fetch();
-    // var_dump($user);
+
     if (password_verify($password, $user['password'])) {
-        echo "Mot de passe correct";
+
+        $_SESSION['username'] = $username;
+
+        header("location: index.php");
+        exit();
     } else {
         echo "Mot de passe incorrect";
     }
 }
+
+
 ?>
 
 
@@ -43,8 +54,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label for="password">Veuillez saisir un mot de passe :</label>
             <input type="password" name="password" id="password">
         </div>
-        <button type="submit">Entrer</button>
+        <button type="submit">Connection</button>
     </form>
+    <a href="inscription.php">S'inscrire</a>
 </body>
 
 </html>

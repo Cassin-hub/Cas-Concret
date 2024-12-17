@@ -2,16 +2,22 @@
 require_once 'config.php';
 
 if (isset($_POST['password']) && isset($_POST['username'])) {
+
     $username = $_POST['username'];
+
     $password = $_POST['password'];
-   
+
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-  
+
     $sql = "INSERT INTO users (username, password)
+
 VALUES (:username, :password)";
+
     $stmt = $pdo->prepare($sql);
+
     $stmt->execute([':username' => $username, ':password' => $hashedPassword]);
-    header("location: http://localhost/projets/exercices_introduction_php/PHP/Cas%20Concret/connexion.php", true, 301);
+
+    header("location: connexion.php");
     exit();
 }
 
