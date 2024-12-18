@@ -8,13 +8,7 @@ if (isset($_SESSION['username'])) {
     header("location: connexion.php");
     exit();
 }
-// if (isset($_SESSION['username']) && $_SESSION['username'] !== null) {
-//     header("location: deconnexion.php");
-//     exit();
-// }
-if (!isset($_SESSION['csrf_token'])) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-}
+
 ?>
 
 <!DOCTYPE html>
